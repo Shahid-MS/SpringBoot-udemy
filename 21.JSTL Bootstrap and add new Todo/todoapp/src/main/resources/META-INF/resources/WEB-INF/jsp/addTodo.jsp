@@ -12,7 +12,7 @@
         <div class="container">
             <h1>Enter new Todo details</h1>
             <form action="" method="post">
-                Description : <input type="text" name="description">
+                Description : <input type="text" name="description" required>
                 <button class="btn btn-success" type="submit">Add</button>
 
             </form>
