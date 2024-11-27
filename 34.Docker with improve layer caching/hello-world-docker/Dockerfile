@@ -1,7 +1,14 @@
 # Creating jar file
 FROM maven:3.8.6-openjdk-18-slim AS build
 WORKDIR /home/app
-COPY . /home/app/
+
+# Copy only pom and Application
+COPY ./pom.xml /home/app/pom.xml
+COPY ./src/main/java/com/ms/hello_world_docker/HelloWorldDockerApplication.java /home/app/src/main/java/com/ms/hello_world_docker/HelloWorldDockerApplication.java
+
+RUN mvn -f /home/app/pom.xml clean package
+
+COPY . /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 
