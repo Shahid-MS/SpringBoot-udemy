@@ -1,30 +1,28 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./Security/AuthContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
+
   const [showFailure, setShowFailure] = useState(false);
 
   const navigate = useNavigate();
+  const authContext = useAuth();
   const handleSubmit = () => {
-    if (username === "MS@gmail.com" && password === "ms") {
-      setShowSuccess(true);
+    if (authContext.login(username, password)) {
       setShowFailure(false);
       console.log("success");
       navigate(`/welcome/${username}`);
     } else {
       setShowFailure(true);
-      setShowSuccess(false);
       console.log("Authentication Failed");
     }
   };
 
   return (
     <div className="container">
-      {showSuccess && <div className="success">Authentication Successful</div>}
-
       {showFailure && (
         <div className="failure">
           Authentication Failed. Check email and Password

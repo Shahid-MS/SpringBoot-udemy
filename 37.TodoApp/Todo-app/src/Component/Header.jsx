@@ -1,6 +1,12 @@
+// import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./Security/AuthContext";
 
 const Header = () => {
+  const authContext = useAuth();
+  // console.log(authContext);
+  const isAuthenticated = authContext.isAuthenticated;
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container-fluid">
@@ -20,17 +26,24 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li>
-              <Link to="/login" className="nav-link">
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link to="/logout" className="nav-link">
-                Logout
-              </Link>
-            </li>
-
+            {!isAuthenticated && (
+              <li>
+                <Link to="/login" className="nav-link">
+                  Login
+                </Link>
+              </li>
+            )}
+            {isAuthenticated && (
+              <li>
+                <Link
+                  to="/logout"
+                  className="nav-link"
+                  onClick={authContext.logout}
+                >
+                  Logout
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>

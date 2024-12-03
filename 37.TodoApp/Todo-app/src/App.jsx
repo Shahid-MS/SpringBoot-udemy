@@ -5,27 +5,59 @@ import Header from "./Component/Header";
 
 import Login from "./Component/Login";
 import Logout from "./Component/Logout";
+import AuthProvider, { useAuth } from "./Component/Security/AuthContext";
 import Todos from "./Component/Todos";
 import Welcome from "./Component/Welcome";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+function AuthenticatedRoute({ children }) {
+  const authContext = useAuth();
+  if (authContext.isAuthenticated) {
+    return children;
+  }
+  return <Navigate to="/" />;
+}
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Header />
-        <div className="main-content">
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/todos" element={<Todos />} />
-          <Route path="/welcome/:username" element={<Welcome />} />
-          <Route path="/logout" element={<Logout />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Header />
+          <div className="main-content">
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/todos"
+                element={
+                  <AuthenticatedRoute>
+                    <Todos />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/welcome/:username"
+                element={
+                  <AuthenticatedRoute>
+                    <Welcome />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route
+                path="/logout"
+                element={
+                  <AuthenticatedRoute>
+                    <Logout />
+                  </AuthenticatedRoute>
+                }
+              />
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }
