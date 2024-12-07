@@ -5,7 +5,9 @@ import Header from "./Component/Header";
 
 import Login from "./Component/Login";
 import Logout from "./Component/Logout";
+import NewTodo from "./Component/NewTodo";
 import AuthProvider, { useAuth } from "./Component/Security/AuthContext";
+import Todo from "./Component/Todo";
 import Todos from "./Component/Todos";
 import Welcome from "./Component/Welcome";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -52,6 +54,25 @@ function App() {
                   </AuthenticatedRoute>
                 }
               />
+
+              <Route
+                path="/todos/:id"
+                element={
+                  <AuthenticatedRoute>
+                    <Todo />
+                  </AuthenticatedRoute>
+                }
+              />
+
+              <Route
+                path="/todos/new"
+                element={
+                  <AuthenticatedRoute>
+                    <NewTodo />
+                  </AuthenticatedRoute>
+                }
+              />
+
               <Route path="*" element={<Error />} />
             </Routes>
           </div>

@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 public class TodoService {
 
   private static List<Todo> todos = new ArrayList<>();
+  static int count = 0;
 
   static {
     todos.add(
       new Todo(
-        1,
+        ++count,
         "john_doe",
         "Finish project report",
         LocalDate.of(2024, 11, 15),
@@ -22,7 +23,7 @@ public class TodoService {
     );
     todos.add(
       new Todo(
-        2,
+        ++count,
         "jane_smith",
         "Buy groceries",
         LocalDate.of(2024, 11, 12),
@@ -31,7 +32,7 @@ public class TodoService {
     );
     todos.add(
       new Todo(
-        3,
+        ++count,
         "john_doe",
         "Book flight tickets",
         LocalDate.of(2024, 11, 20),
@@ -40,7 +41,7 @@ public class TodoService {
     );
     todos.add(
       new Todo(
-        4,
+        ++count,
         "alice_wonder",
         "Prepare presentation",
         LocalDate.of(2024, 11, 14),
@@ -63,5 +64,31 @@ public class TodoService {
 
   public boolean deleteById(int id) {
     return todos.removeIf(todo -> todo.getId() == id);
+  }
+
+  public Todo addTodo(
+    String username,
+    String description,
+    LocalDate targetDate,
+    boolean done
+  ) {
+    Todo newTodo = new Todo(++count, username, description, targetDate, done);
+    todos.add(newTodo);
+    return newTodo;
+  }
+
+  public Todo updateTodo(Todo targetTodo) {
+    Todo existTodo = todos
+      .stream()
+      .filter(td -> td.getId() == targetTodo.getId())
+      .findFirst()
+      .orElse(null);
+    // System.out.println("targetTodo" + targetTodo);
+    existTodo.setDone(targetTodo.isDone());
+    // existTodo.setUsername(targetTodo.getUsername());
+    existTodo.setDescription(targetTodo.getDescription());
+    existTodo.setTargetDate(targetTodo.getTargetDate());
+    // System.out.println("added toto" + existTodo);
+    return existTodo;
   }
 }

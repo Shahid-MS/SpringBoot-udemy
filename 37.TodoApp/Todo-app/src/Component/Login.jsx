@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = () => {
     if (authContext.login(username, password)) {
       setShowFailure(false);
-      console.log("success");
+      // console.log("success");
       navigate(`/welcome/${username}`);
     } else {
       setShowFailure(true);
