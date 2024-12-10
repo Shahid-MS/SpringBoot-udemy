@@ -21,4 +21,8 @@ export function retrieveHelloWorld() {
 export const retrieveHelloWorldBean = () => apiClient.get("/hello-world-bean");
 
 export const retrieveHelloWorldPathvariable = (username) =>
-  apiClient.get(`/hello-world-bean/path-variable/${username}`);
+  apiClient.get(`/hello-world-bean/path-variable/${username}`, {
+    headers: {
+      Authorization: "",
+    },
+  });

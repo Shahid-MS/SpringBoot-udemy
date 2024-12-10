@@ -10,8 +10,8 @@ const Login = () => {
 
   const navigate = useNavigate();
   const authContext = useAuth();
-  const handleSubmit = () => {
-    if (authContext.login(username, password)) {
+  const handleSubmit = async () => {
+    if (await authContext.login(username, password)) {
       setShowFailure(false);
       // console.log("success");
       navigate(`/welcome/${username}`);
