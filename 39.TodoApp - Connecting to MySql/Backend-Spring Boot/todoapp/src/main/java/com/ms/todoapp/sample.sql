@@ -1,3 +1,9 @@
+Create database TodoDb;
+show databases;
+
+use tododb;
+select * from todo;
+
 INSERT INTO
     Todo (DONE, TARGET_DATE, DESCRIPTION, USERNAME)
 VALUES

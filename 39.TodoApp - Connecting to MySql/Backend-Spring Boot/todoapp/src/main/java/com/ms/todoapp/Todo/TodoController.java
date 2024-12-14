@@ -41,7 +41,7 @@ public class TodoController {
     @PathVariable String username,
     @RequestBody Todo todo
   ) {
-    System.out.println(todo.toString());
+    // System.out.println(todo.toString());
     return todoRepo.save(todo);
   }
 
